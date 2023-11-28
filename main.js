@@ -1,17 +1,29 @@
-function tocaSomAplausos(){
-    document.querySelector('#som_tecla_aplausos').play();
+function tocaSom(idElementoAudio){
+    const elemento = document.querySelector(idElementoAudio);
+    if (elemento && elemento.localName === 'audio'){
+        elemento.play();
+    }else{
+        console.log("Elemento não encontrado ou seletor inválido")
+    }
 }
-document.querySelector('.tecla_aplausos') .onclick=tocaSomAplausos;
 
-function tocaSomVaia(){
-    document.querySelector('#som_tecla_vaia').play();
+const listaDeTeclas = document.querySelectorAll('.tecla');
+
+
+for(let contador = 0; contador < listaDeTeclas.length; contador++){
+    const tecla = listaDeTeclas[contador];
+    const efeito = tecla.classList[1];
+    const idAudio = `#som_${efeito}`;
+tecla.onclick = function() {
+    tocaSom (idAudio);
+    }
+    tecla.onkeydown = function(evento) {
+        if(evento.code === 'Space' || evento.code === 'Enter') {
+          tecla.classList.add('ativa');  
+        }
+        
+    }
+    tecla.onkeyup = function() {
+        tecla.classList.remove('ativa');
+    }
 }
-document.querySelector('.tecla_vaia') .onclick=tocaSomVaia;
-
-function tocaSomRisada(){
-    document.querySelector('#som_tecla_risada').play();
-}
-document.querySelector('.tecla_risada') .onclick=tocaSomRisada;
-
-
-
